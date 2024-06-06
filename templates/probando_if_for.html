@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <ul>
-        
-        {% for num in numeros %}
-            {% if num > 250 %}
-            <li style= "color:red">numero: {{num}}</li>
-            {% else %}
-        
-            <li style= "color: green">numero: {{num}}</li>
-            {% endif %}
+{% extends "base.html" %}
 
-        {% endfor %}
-    </ul>
+{% block header %}
+<h1>PROBANDO</h1>
+{% endblock header %}
+{% block main %}
+<ul>
+        
+    {% for num in numeros %}
+        {% if num > 250 %}
+        <li style= "color:red">numero: {{num}}</li>
+        {% else %}
     
-</body>
-</html>
+        <li style= "color: green">numero: {{num}}</li>
+        {% endif %}
+
+    {% endfor %}
+</ul>
+
+
+{% endblock main %}
