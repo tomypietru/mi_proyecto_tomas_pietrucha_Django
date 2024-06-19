@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block titulo_pagina %}
-Autos
+Paletas
 {% endblock titulo_pagina %}
 
 
@@ -13,13 +13,13 @@ Listado de Paletas
 <h2><a href={% url "crear_paleta" %}>Crear Paleta</a></h2>
 
 
-{% if paleta %}
+{% if paletas %}
 <ul>
     {% for paleta in paletas %}
     <li>{{paleta}} | 
         {% comment %} <a href= {% url "eliminar_paleta" paleta.id%}>Eliminar</a> | 
-        <a href= {% url "editar_paleta" paleta.id%}>Editar</a> |
-        <a href= {% url "ver_paleta" paleta.id%}>Ver</a> | {% endcomment %}
+        <a href= {% url "editar_paleta" paleta.id%}>Editar</a> | {% endcomment %}
+        <a href= {% url "ver_paleta" paleta.id%}>Ver</a> |
     </li>
     {% endfor %}
     </ul>
