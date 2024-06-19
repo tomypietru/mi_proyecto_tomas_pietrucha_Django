@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo_pagina %}
+Crear auto
+{% endblock titulo_pagina %}
+
+
+{% block h1_header %}
+Crear Paleta
+{% endblock h1_header %}
+
+{% block main %}
+
+<form action={% url "crear_paleta" %} method="POST">
+    {% csrf_token %}
+    
+    
+    {{forms}}
+
+    <input type="submit" value="Enviar"> 
+    
+</form>
+
+{% endblock main %}
+
+

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block titulo_pagina %}
+Autos
+{% endblock titulo_pagina %}
+
+
+{% block h1_header %}
+Listado de Autos
+{% endblock h1_header %}
+
+{% block main %}
+
+<h2><a href={% url "crear_auto_v2" %}>Crear auto</a></h2>
+
+<form 
+    action={% url "autos" %} method="get">
+    {{formulario}}
+
+    <input type="submit" value="Buscar">
+
+
+</form>
+
+
+{% if autos %}
+<ul>
+    {% for auto in autos %}
+    <li>{{auto}} | 
+        <a href= {% url "eliminar_auto" auto.id%}>Eliminar</a> | 
+        <a href= {% url "editar_auto" auto.id%}>Editar</a> |
+        <a href= {% url "ver_auto" auto.id%}>Ver</a> |
+    </li>
+    {% endfor %}
+    </ul>
+{% else %}
+<p>no hay autos creados.</p>    
+{% endif %}
+
+{% endblock main %}
+
+

@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import datetime
 from django.template import Template, Context, loader
 import random
 
 from inicio.models import Auto
-
+from inicio.forms import CrearAutoFormulario, BuscarAuto, EditarAutoFormulario
 
 # Create your views here.
 
@@ -92,3 +92,61 @@ def crear_auto(request, marca, modelo):
     auto = Auto(marca=marca, modelo= modelo)
     auto.save()
     return render(request, "auto_templates/creacion.html", {"auto": auto})
+
+def crear_auto_v2(request):
+    #v1
+    
+    if request.method == "POST":
+        ...
+        formulario = CrearAutoFormulario(request.POST)
+        if formulario.is_valid():
+            datos = formulario.cleaned_data
+            auto = Auto(marca=datos.get("marca"), modelo=datos.get("modelo"))#, anio=datos.get("anio"))
+            auto.save()
+            return redirect("inicio")
+    formulario = CrearAutoFormulario()
+    return render(request, "inicio/crear_auto_v2.html", {"formulario": formulario})
+    
+    # print("valor de request: ", request)
+    # print("valor de GET: ", request.GET)
+    # print("valor del post: ", request.POST)
+    
+def autos(request):
+    formulario = BuscarAuto(request.GET)
+    if formulario.is_valid():
+        marca = formulario.cleaned_data["marca"]
+        autos = Auto.objects.filter(marca__icontains=marca)
+    
+    
+    # auto = Auto.objects.all()
+    return render(request, "inicio/autos.html", {"autos": autos, "formulario": formulario})
+    
+    
+def eliminar_auto(request, id):
+    auto = Auto.objects.get(id=id)
+    auto.delete()
+    return redirect("autos")
+
+def editar_auto(request, id):
+    auto = Auto.objects.get(id=id)
+    formulario = EditarAutoFormulario(initial={"marca": auto.marca , "modelo": auto.modelo})# , "anio": auto.anio})
+    
+    if request.method == "POST":
+        formulario = EditarAutoFormulario(request.POST)
+        if formulario.is_valid():
+            info = formulario.cleaned_data
+            
+            auto.marca = info["marca"]
+            auto.modelo = info["modelo"]
+            # auto.anio = info["anio"]
+            
+            auto.save()
+            return redirect("autos")
+    
+    return render(request,'inicio/editar_auto.html',{'formulario': formulario,'auto': auto})
+
+
+def ver_auto(request, id):
+    auto = Auto.objects.get(id=id)
+    return render(request, "inicio/ver_auto.html", {"auto": auto})
+

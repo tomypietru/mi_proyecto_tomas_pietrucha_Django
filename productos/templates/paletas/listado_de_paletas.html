@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo_pagina %}
+Autos
+{% endblock titulo_pagina %}
+
+
+{% block h1_header %}
+Listado de Paletas
+{% endblock h1_header %}
+
+{% block main %}
+
+<h2><a href={% url "crear_paleta" %}>Crear Paleta</a></h2>
+
+
+{% if paleta %}
+<ul>
+    {% for paleta in paletas %}
+    <li>{{paleta}} | 
+        {% comment %} <a href= {% url "eliminar_paleta" paleta.id%}>Eliminar</a> | 
+        <a href= {% url "editar_paleta" paleta.id%}>Editar</a> |
+        <a href= {% url "ver_paleta" paleta.id%}>Ver</a> | {% endcomment %}
+    </li>
+    {% endfor %}
+    </ul>
+{% else %}
+<p>no hay paletas creadas.</p>    
+{% endif %}
+
+{% endblock main %}
+
+
