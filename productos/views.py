@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from .models import Paleta
 from django.urls import reverse_lazy
-# Create your views here.
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def paletas(request):
     return HttpResponse("esta es la vista de paletas")
@@ -22,9 +22,17 @@ class CrearPaleta(CreateView):
     fields = ["marca", "descripcion", "fecha"]
     
     
-class EditarPaleta(UpdateView):        
-    ...
+class EditarPaleta(LoginRequiredMixin, UpdateView):        
+    model = Paleta
+    template_name = "paletas/editar_paleta.html"
+    success_url = reverse_lazy("paletas")
+    fields = ["marca", "descripcion", "fecha"]
     
 class VerPaleta(DetailView):
     model = Paleta
     template_name = "paletas/ver_paleta.html"
+    
+class EliminarPaleta(LoginRequiredMixin, DeleteView):
+    model = Paleta
+    template_name = "paletas/eliminar_paleta.html"
+    success_url = reverse_lazy("paletas")

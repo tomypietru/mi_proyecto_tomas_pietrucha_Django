@@ -7,8 +7,8 @@ from inicio.models import Auto
 from inicio.forms import CrearAutoFormulario, BuscarAuto, EditarAutoFormulario
 
 # Create your views here.
-
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 def inicio(request):
     #return HttpResponse("Bienvenido crack!")
@@ -121,12 +121,13 @@ def autos(request):
     # auto = Auto.objects.all()
     return render(request, "inicio/autos.html", {"autos": autos, "formulario": formulario})
     
-    
+@login_required
 def eliminar_auto(request, id):
     auto = Auto.objects.get(id=id)
     auto.delete()
     return redirect("autos")
 
+@login_required
 def editar_auto(request, id):
     auto = Auto.objects.get(id=id)
     formulario = EditarAutoFormulario(initial={"marca": auto.marca , "modelo": auto.modelo})# , "anio": auto.anio})

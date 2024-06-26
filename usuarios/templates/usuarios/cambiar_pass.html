@@ -1,25 +1,23 @@
 {% extends "base.html" %}
 {% block titulo_pagina %}
-Crear Paleta
+Cambiar Contraseña
 {% endblock titulo_pagina %}
 
 
 {% block h1_header %}
-Crear Paleta
+Cambiar Contraseña
 {% endblock h1_header %}
 
 {% block main %}
 
-<form action={% url "crear_paleta" %} method="POST">
+<form action={% url "cambiar_pass" %} method="POST">
     {% csrf_token %}
     
     
     {{form}}
 
-    <input type="submit" value="Crear"> 
+    <input type="submit" value="Confirmar Cambio"> 
     
 </form>
 
 {% endblock main %}
-
-
